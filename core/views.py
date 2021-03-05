@@ -55,7 +55,7 @@ def login_view(request):
         else:
             print("l3")
             context['error'] = "Invalid Login"
-            return redirect('login')
+            # return redirect('login')
 
         #     return redirect('home')
         # else:
