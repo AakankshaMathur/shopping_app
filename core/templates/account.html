@@ -356,8 +356,9 @@
                     {% endif %}
                   </div>
                 
-                 <form action="" method="POST" class="aa-login-form">
+                 <form action="/home/login/" method="POST" class="aa-login-form">
                  {% csrf_token %}
+                
                   <label for="username">Username or Email address<span>*</span></label>
                    <input type="text"  name="username" placeholder="Username or email"/>
                    <label for="password">Password<span>*</span></label>
@@ -366,8 +367,6 @@
                     <!-- <a class="aa-browse-btn" href="/home/">Login</a> -->
                     <!-- <button class = "aa-browse-btn" type="submit">Login</button> -->
                   
-                       
-                
                     <input type="submit" value="Login" class = "aa-browse-btn" />
                     <label class="rememberme" for="rememberme"><input type="checkbox" id="rememberme"> Remember me </label>
                     <p class="aa-lost-password"><a href="#">Lost your password?</a></p>
@@ -381,8 +380,8 @@
                   {% csrf_token %}
                     
                    
-                      <label for="username">UserName or Email<span>*</span></label><br/>
-                      <input name = "username" type="text" placeholder="Name">
+                      <label for="username">Email<span>*</span></label><br/>
+                      <input name = "username" type="email" placeholder="Name">
                       <br/>
                       <br/>
                       <label for="password">Password<span>*</span></label><br/>

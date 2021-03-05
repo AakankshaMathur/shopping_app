@@ -4,6 +4,7 @@ from .utils import *
 from .models import Product, Category, UserProfile
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User, auth
+from django.contrib.auth.views import LoginView
 # from .utils import get_context
 
 from django.contrib.auth import get_user_model
@@ -33,21 +34,28 @@ def signup_view(request):
 
 
 def login_view(request):
+    print("login hello")
     context = {}
     if request.method == "POST":
         username = request.POST.get('username')
+        print(username)
         password = request.POST.get('password')
+        print(password)
         # valid = True
         # if valid is True:       
         user = authenticate(request, username=username, password=password)
+        print(user)
         
         if user is not None:
             login(request, user)
             context['success'] = "Succesfully logged In!!"
+            print("l2")
             return redirect('home')
 
         else:
+            print("l3")
             context['error'] = "Invalid Login"
+            return redirect('login')
 
         #     return redirect('home')
         # else:

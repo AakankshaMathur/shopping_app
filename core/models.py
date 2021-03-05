@@ -2,12 +2,13 @@ from django.db import models
 # from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 
+
 # Create your models here.
 
 User = get_user_model()
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True,  related_name="user_profile")
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name="user_profile")
     name = models.CharField(null=True, blank=True, max_length=250)
     contact = models.CharField(null=True, blank=True, max_length=20, unique=True)
     image = models.ImageField(upload_to ='uploads/')
