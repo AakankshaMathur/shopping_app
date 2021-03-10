@@ -1,0 +1,25 @@
+{% if user.is_authenticated %}
+<h1> Edit Profile </h1>
+
+<br />
+<br />
+<form method="POST" action="/home/profile/" >
+    {% csrf_token %}
+
+    {{ form.as_p }}
+   
+    <!-- <a class = "btn btn-secondary" href="/home/">Update Profile</button>  -->
+    <!-- <a href="/home/">Update Profile</a> -->
+    <button class = "btn btn-secondary" type = "submit">Update Profile</button>
+    
+      
+</form>
+
+{% else %}
+
+<h3>login first</h3>
+
+{% endif %}
+
+<!-- 
+enctype="multipart/form-data"  -->

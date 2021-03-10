@@ -10,3 +10,5 @@ admin.site.register(Size)
 admin.site.register(Order)
 admin.site.register(Address)
 
+# class AdressInline(admin.TabularInline):
+#     model = Address

@@ -1,10 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from .utils import *
-from .models import Product, Category, UserProfile
+from django.views import generic
+from django.urls import reverse_lazy
+from .models import Product, Category, UserProfile, Address
+from django_countries import countries
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User, auth
-from django.contrib.auth.views import LoginView
+
+from .forms import ProfileForm
+from django.http import HttpResponse
 # from .utils import get_context
 
 from django.contrib.auth import get_user_model
@@ -67,6 +72,15 @@ def login_view(request):
 
     return render(request, "account.html", context)
 
+def logout_view(request):
+    auth.logout(request)
+    return redirect('home')
+    # context = {}
+    # if request.user.is_authenticated:
+    #     return render(request,"index.html", context)
+    # else:
+    #     return render(request, "index.html", context)
+    # return render(request,"index.html", context)
 
 def home_view(request):
     
@@ -86,20 +100,35 @@ def productdetail_view(request):
 
     return render(request, "product-detail.html", context)
 
-# def category_view(request, kwargs):
-#     category = None
-#     slug = None
+def profile_view(request):
+    model = UserProfile
+    form = ProfileForm(instance = request.user.user_profile)
+    # form = ProfileForm()
+    print(form)
+    # form = ProfileForm(request.GET)
+    context = {'form' : form}
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES, instance= request.user.user_profile)
+        print(form.errors)
+        print(form, "qwertyyyyyyyyyyyyyyy")
+        
+        if form.is_valid():
+            # obj = Address()
+            # obj.address = form.cleaned_data('address')
+            # obj.city = form.cleaned_data('city')
+            # obj.state = form.cleaned_data('state')
+            # obj.country = form.cleaned_data('country')
+            # print("valid")
+            
+            print("valid")
+            form.save()
+            return redirect('home')
+    
+    return render(request, "profile.html", context)
 
-#     try:
-#         slug = kwargs.get('slug')
-#     except Exception as e:
-#         print(e)
-#         pass
-#     if slug:
-#         category = Category.objects.filter(slug=slug).first()
-#     else :
-#         category = Category.objects.filter(parent=None).first()
+    
 
-#     return render(request, "product.html", context)
-
-
+    # obj.address = form.POST.get('address')
+    #         obj.city = form.POST.get('city')
+    #         obj.state = form.POST.get('state')
+    #         obj.country = form.POST.get('country')

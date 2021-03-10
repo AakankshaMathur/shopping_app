@@ -102,11 +102,22 @@
               <!-- / header top left -->
               <div class="aa-header-top-right">
                 <ul class="aa-head-top-nav-right">
-                  <li><a href="account.html">My Account</a></li>
+                  {% if user.is_authenticated %}
+                  <!-- <li><a href="/home/signup/">My Account</a></li> -->
+                  {{user.username}}
                   <li class="hidden-xs"><a href="wishlist.html">Wishlist</a></li>
                   <li class="hidden-xs"><a href="cart.html">My Cart</a></li>
                   <li class="hidden-xs"><a href="checkout.html">Checkout</a></li>
-                  <li><a href="" data-toggle="modal" data-target="#login-modal">Login</a></li>
+                  <li><a href="/home/profile/">Profile</a></li>
+                  <li><a href="/home/logout/">Logout</a></li>
+
+                {% else %}
+                  <!-- <li><a href="/home/signup/">My Account</a></li> -->
+                  <li class="hidden-xs"><a href="wishlist.html">Wishlist</a></li>
+                  <li class="hidden-xs"><a href="cart.html">My Cart</a></li>
+                  <li class="hidden-xs"><a href="checkout.html">Checkout</a></li>
+                  <li><a href="/home/login/">Login</a></li>
+                {% endif %}
                 </ul>
               </div>
             </div>

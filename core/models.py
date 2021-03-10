@@ -1,6 +1,7 @@
 from django.db import models
 # from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
+from django_countries.fields import CountryField
 
 
 # Create your models here.
@@ -20,7 +21,16 @@ class UserProfile(models.Model):
         return self.name
 
 class Address(models.Model):
+    ADDRESS_TYPE = (
+        ('Billing Address', 'Billing Address'),
+        ('Shipping Address', 'Shipping Address'),
+    )
+
     address = models.TextField(max_length=600, null=True, blank=True)
+    city = models.CharField(null=True, blank=True, max_length=20)
+    country = CountryField(null=True, blank=True)
+    state = models.CharField(null=True, blank=True, max_length=20)
+    address_type = models.CharField(choices = ADDRESS_TYPE, max_length=20, null=True, blank=True)
 
 
 
