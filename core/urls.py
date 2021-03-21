@@ -9,7 +9,7 @@ urlpatterns = [
     path('home/', home_view, name="home"),
     path('home/profile/', profile_view, name="profile"),
     path('home/products/', products_view, name="products"),
-    path('home/detail/', productdetail_view, name="productdetail"),
+    path('home/detail/<slug:slug>/', productdetail_view, name="productdetail"),
     # path('home/product/category', category_view, name="category_view"),
     
 ]

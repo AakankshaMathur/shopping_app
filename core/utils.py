@@ -12,7 +12,7 @@ def create_user(request,*args, **kwargs):
     password = kwargs.pop("password")
     
     username = kwargs.pop("username")
-    user = User.objects.create_user(username, username,password)
+    user = User.objects.create_user(username, username, password)
 
     user.save()
 

@@ -25,7 +25,7 @@ class Address(models.Model):
         ('Billing Address', 'Billing Address'),
         ('Shipping Address', 'Shipping Address'),
     )
-
+    # username = models.ManyToManyField(User, on_delete=models.CASCADE, null=True, blank=True, related_name="user_address")
     address = models.TextField(max_length=600, null=True, blank=True)
     city = models.CharField(null=True, blank=True, max_length=20)
     country = CountryField(null=True, blank=True)
@@ -36,12 +36,17 @@ class Address(models.Model):
 
 class Product(models.Model):
     product_name = models.CharField(null=True, blank=True, max_length=250)
+    image = models.ImageField(upload_to ='uploads/', null=True, blank=True)
+    slug = models.SlugField(max_length=255, unique=True, null=True,blank=True)
     product_size = models.ManyToManyField('Size')
     desc = models.TextField(max_length=300, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.ForeignKey('Category', related_name='category_type', on_delete=models.CASCADE, null=True, blank=True)
     sub_category = models.ForeignKey('SubCategory', related_name='subcategory_type', on_delete=models.CASCADE, null=True, blank=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True,  related_name="created_by")
+    
+    def get_absolute_url(self):
+        return f"home/detail/{self.slug}/"
     def __str__(self):
         return self.product_name
 
@@ -58,6 +63,7 @@ class Category(models.Model):
     # )
 
     category_name = models.CharField(max_length=50, null=True, blank=True)
+    slug = models.SlugField(max_length=255, unique=True, null=True,blank=True)
     # subcategory_name = models.CharField(choices=SUBCATEGORY_TYPE, max_length=50, null=True, blank=True)
 
     def __str__(self):

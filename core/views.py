@@ -8,7 +8,7 @@ from django_countries import countries
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User, auth
 
-from .forms import ProfileForm
+from .forms import ProfileForm, AddressForm
 from django.http import HttpResponse
 # from .utils import get_context
 
@@ -83,8 +83,23 @@ def logout_view(request):
     # return render(request,"index.html", context)
 
 def home_view(request):
+    model = Product
+    slug = None
+    # products = Product.objects.all()
+    menproduct = Product.objects.filter(category__category_name = "Men")
+    womenproduct = Product.objects.filter(category__category_name = "Women")
+
+    # print(products)
+    # category = Category.objects.all()
     
-    context = {}
+    # category = products.filter(category=category)
+    # print(category)
+    
+    context = {'menproduct' : menproduct, 
+                'womenproduct' : womenproduct,
+            #    'category': category,
+                }
+    print(context)
 
     return render(request, "index.html", context)
 
@@ -94,34 +109,48 @@ def products_view(request):
 
     return render(request, "product.html", context)
 
-def productdetail_view(request):
+def productdetail_view(request, slug):
     model = Product
-    context = {}
+    product = Product.objects.get(slug=slug)
+  
+    context = {'product' : product.product_name,
+                'description' : product.desc,
+                'price' : product.price,
+                'category' : product.category,
+                'subcategory' : product.sub_category,
+                'image' : product.image, }
+
 
     return render(request, "product-detail.html", context)
 
 def profile_view(request):
     model = UserProfile
-    form = ProfileForm(instance = request.user.user_profile)
-    # form = ProfileForm()
-    print(form)
-    # form = ProfileForm(request.GET)
-    context = {'form' : form}
+    model2 = Address
+    form1 = ProfileForm(instance = request.user.user_profile)
+    form2 = AddressForm()
+    
+    print(form1)
+    print(form2)
+  
+    context = {'form1' : form1, 'form2' : form2}
+    
+
     if request.method == "POST":
-        form = ProfileForm(request.POST, request.FILES, instance= request.user.user_profile)
-        print(form.errors)
-        print(form, "qwertyyyyyyyyyyyyyyy")
-        
-        if form.is_valid():
-            # obj = Address()
-            # obj.address = form.cleaned_data('address')
-            # obj.city = form.cleaned_data('city')
-            # obj.state = form.cleaned_data('state')
-            # obj.country = form.cleaned_data('country')
-            # print("valid")
-            
+        form1 = ProfileForm(request.POST, request.FILES, instance= request.user.user_profile)
+        print(form1.errors)
+        print(form1, "qwertyyyyyyyyyyyyyyy")
+        form2 = AddressForm(request.POST)
+       
+        print(request.POST)
+        if form1.is_valid() and form2.is_valid():
+          
             print("valid")
-            form.save()
+            form1.save()
+            form2.save()
+        else:
+            form1 = ProfileForm()
+            form2 = AddressForm()
+       
             return redirect('home')
     
     return render(request, "profile.html", context)
@@ -132,3 +161,4 @@ def profile_view(request):
     #         obj.city = form.POST.get('city')
     #         obj.state = form.POST.get('state')
     #         obj.country = form.POST.get('country')
+

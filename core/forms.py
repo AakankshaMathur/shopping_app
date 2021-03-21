@@ -13,10 +13,10 @@ class ProfileForm(forms.ModelForm):
     # contact = forms.CharField()
     # image = forms.ImageField()
     # email = forms.EmailField()
-    address = forms.CharField(widget=forms.Textarea(attrs={"rows":10, "cols":10}))
-    city = forms.CharField()
-    state = forms.CharField()
-    country = CountryField().formfield()
+    # address = forms.CharField(widget=forms.Textarea(attrs={"rows":10, "cols":10}))
+    # city = forms.CharField()
+    # state = forms.CharField()
+    # country = CountryField().formfield()
 
     # address_type = forms.CharField(widget=forms.Select(ADDRESS_TYPE))
 
