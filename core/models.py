@@ -39,6 +39,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to ='uploads/', null=True, blank=True)
     slug = models.SlugField(max_length=255, unique=True, null=True,blank=True)
     product_size = models.ManyToManyField('Size')
+    quantity = models.IntegerField(default=1)
     desc = models.TextField(max_length=300, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.ForeignKey('Category', related_name='category_type', on_delete=models.CASCADE, null=True, blank=True)

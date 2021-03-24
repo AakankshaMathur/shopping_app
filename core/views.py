@@ -112,14 +112,19 @@ def products_view(request):
 def productdetail_view(request, slug):
     model = Product
     product = Product.objects.get(slug=slug)
+    quantity = Product.objects.filter(quantity = product.quantity).count()
+    print(quantity)
   
     context = {'product' : product.product_name,
                 'description' : product.desc,
                 'price' : product.price,
                 'category' : product.category,
                 'subcategory' : product.sub_category,
+                'quantity' : product.quantity,
                 'image' : product.image, }
-
+    print(context)
+    
+   
 
     return render(request, "product-detail.html", context)
 
