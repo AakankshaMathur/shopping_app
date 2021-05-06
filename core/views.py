@@ -1,16 +1,19 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from .utils import *
-from django.views import generic
+
 from django.urls import reverse_lazy
-from .models import Product, Category, UserProfile, Address
+from .models import Product, Category, UserProfile, Address, Order
 from django_countries import countries
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User, auth
 
 from .forms import ProfileForm, AddressForm
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 # from .utils import get_context
+from django.db.models import Count
+from .forms import QuantityForm
 
 from django.contrib.auth import get_user_model
 
@@ -97,7 +100,7 @@ def home_view(request):
     
     context = {'menproduct' : menproduct, 
                 'womenproduct' : womenproduct,
-            #    'category': category,
+           
                 }
     print(context)
 
@@ -114,14 +117,16 @@ def productdetail_view(request, slug):
     product = Product.objects.get(slug=slug)
     quantity = Product.objects.filter(quantity = product.quantity).count()
     print(quantity)
+   
   
-    context = {'product' : product.product_name,
+    context = { 'product' : product.product_name,
                 'description' : product.desc,
                 'price' : product.price,
                 'category' : product.category,
                 'subcategory' : product.sub_category,
                 'quantity' : product.quantity,
-                'image' : product.image, }
+                'image' : product.image,
+                'slug' : product.slug, }
     print(context)
     
    
@@ -141,7 +146,7 @@ def profile_view(request):
     
 
     if request.method == "POST":
-        form1 = ProfileForm(request.POST, request.FILES, instance= request.user.user_profile)
+        form1 = ProfileForm(request.POST, request.FILES, instance = request.user.user_profile)
         print(form1.errors)
         print(form1, "qwertyyyyyyyyyyyyyyy")
         form2 = AddressForm(request.POST)
@@ -167,3 +172,61 @@ def profile_view(request):
     #         obj.state = form.POST.get('state')
     #         obj.country = form.POST.get('country')
 
+def checkout_view(request):    
+  
+    if request.user.is_authenticated:
+        customer = request.user.user_profile
+        # user_profile is the related name for user that is user here
+       
+        print(customer)        
+        order, created = Order.objects.get_or_create(customer = customer, )      
+        items = [] 
+        print(3)
+
+        if request.method == "POST":
+            quantity = request.POST.get('quantity')
+            print(quantity)
+            post = Post(quantity = quantity)
+            
+    else:
+        items = []
+        order = {'get_cart_total' : 0,
+                'get_cart_items' : 0,
+                }
+                
+    context = {'items' : items, 'order' : order, 'quantity' : order.quantity} 
+    print(context)
+    
+    return render(request, "checkout.html", context)
+ 
+    
+
+def cart_view(request, slug):
+    # if request.method == "GET":
+    if request.user.is_authenticated:
+        customer = request.user.user_profile
+        # user_profile is the related name for user that is user here
+        print(customer)
+        # orders = Order.objects.all()
+        product = Product.objects.get(slug = slug)
+        order, created = Order.objects.get_or_create(customer = customer, product_name = product, )
+
+        # if created:
+        #     print("yeah")
+        # if not product in orders.product_name.all():
+        #     order.product_name.add(product)
+        # else:
+        #     order.product_name.remove(product)
+        
+        # order.save()
+        items = [] 
+        print(3)
+    else:
+        items = []
+        order = {'get_cart_total' : 0,
+                'get_cart_items' : 0}
+                
+    context = {'items' : items, 'order' : order, }
+    print(context)
+
+    return render(request, "cart.html", context)

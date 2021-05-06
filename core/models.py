@@ -2,11 +2,17 @@ from django.db import models
 # from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django_countries.fields import CountryField
+from django.db.models import Sum
 
 
 # Create your models here.
 
 User = get_user_model()
+
+ADDRESS_TYPE = (
+        ('Billing Address', 'Billing Address'),
+        ('Shipping Address', 'Shipping Address'),
+    )
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name="user_profile")
@@ -21,10 +27,7 @@ class UserProfile(models.Model):
         return self.name
 
 class Address(models.Model):
-    ADDRESS_TYPE = (
-        ('Billing Address', 'Billing Address'),
-        ('Shipping Address', 'Shipping Address'),
-    )
+   
     # username = models.ManyToManyField(User, on_delete=models.CASCADE, null=True, blank=True, related_name="user_address")
     address = models.TextField(max_length=600, null=True, blank=True)
     city = models.CharField(null=True, blank=True, max_length=20)
@@ -35,8 +38,9 @@ class Address(models.Model):
 
 
 class Product(models.Model):
+    id = models.AutoField(primary_key=True)
     product_name = models.CharField(null=True, blank=True, max_length=250)
-    image = models.ImageField(upload_to ='uploads/', null=True, blank=True)
+    image = models.ImageField(upload_to ='media/', null=True, blank=True)
     slug = models.SlugField(max_length=255, unique=True, null=True,blank=True)
     product_size = models.ManyToManyField('Size')
     quantity = models.IntegerField(default=1)
@@ -83,9 +87,54 @@ class Size(models.Model):
         return self.size
 
 class Order(models.Model):
+    # slug = models.SlugField(max_length=255, unique=True, null=True,blank=True)
     customer = models.ForeignKey('UserProfile', related_name='customername', on_delete=models.DO_NOTHING, null=True, blank=True)
     customer_address = models.ForeignKey('Address', related_name='customeraddress', on_delete=models.DO_NOTHING, null=True, blank=True)
-    product = models.ForeignKey('Product', on_delete=models.CASCADE, null=True, blank=True)
-    product_quantity = models.PositiveIntegerField()
-    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    product_name = models.ForeignKey('Product',related_name='productname', on_delete=models.CASCADE, null=True, blank=True)
+    quantity = models.PositiveIntegerField(null=True, blank=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(null=True, blank=True)
+    shipping_address = models.ForeignKey(Address, related_name="shipping_address", on_delete=models.SET_NULL, blank = True, null = True)
+    billing_address = models.ForeignKey(Address, related_name="billing_address", on_delete=models.SET_NULL, blank = True, null = True)
+    date_ordered = models.DateTimeField(auto_now_add = True, blank = True, null = True)
+
+    # def __str__(self):
+    #     return self.customer.name
+
+    def get_absolute_url(self):
+        return f"home/cart/{self.slug}/"
+
+    # def __unicode__(self):
+    #     "Order id: %s" %(self.id)
+
+    # @property
+    # def get_cart_total(self):
+    #     orderitems = self.orderitem_set.all()
+    #     total = Sum([item.get_total for item in items])
+    #     return total
+
+    # @property
+    # def get_cart_items(self):
+    #     orderitems = self.orderitem_set.all()
+    #     total = Sum([item.quantity for item in orderitems])
+    #     return total
+    
+    @property    
+    def get_total(self):
+        total = self.quantity * self.price
+        return total
+    
+   
+
+# OrderItem table not needed until we go for multiple products checkout
+class OrderItem(models.Model):
+    product_name = models.ForeignKey(Product, on_delete = models.SET_NULL, null = True)
+    order = models.ForeignKey(Order, on_delete = models.SET_NULL, null = True)
+    quantity = models.IntegerField(default = 1, null = True,blank = True)
+
+    # property decorator is used so that we can access the function in our template also
+    @property    
+    def get_total(self):
+        total = self.product.total_price * self.product.price
+        return total
+    

@@ -22,3 +22,17 @@ def create_user(request,*args, **kwargs):
     login(request, user)
     return profile
 
+# def order_user(request, *args, **kwargs):
+#     name = kwargs.pop("name")  
+#     email = kwargs.pop("email")
+#     contact = kwargs.pop("contact")
+#     bill_address = kwargs.pop("billing_address") 
+#     ship_address = kwargs.pop("shipping_address")   
+
+#     order = Order.objects.order_user(name, name, email, contact, bill_address, ship_address)
+
+#     order.save()
+
+#     return order
+
+

@@ -10,6 +10,8 @@ urlpatterns = [
     path('home/profile/', profile_view, name="profile"),
     path('home/products/', products_view, name="products"),
     path('home/detail/<slug:slug>/', productdetail_view, name="productdetail"),
+    path('home/checkout/', checkout_view, name="checkout"),
+    path('home/cart/<slug:slug>/', cart_view, name="cart"),
     # path('home/product/category', category_view, name="category_view"),
     
 ]
