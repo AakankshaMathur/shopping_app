@@ -121,7 +121,13 @@ class Order(models.Model):
     
     @property    
     def get_total(self):
-        total = self.quantity * self.price
+        total = 0
+        try:
+            total = self.quantity * self.price
+            
+        except:
+            pass
+
         return total
     
    

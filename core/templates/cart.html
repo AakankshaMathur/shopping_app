@@ -239,9 +239,10 @@
      
         <div class="col-md-12">
           <div class="cart-view-area">
-            
+         
               <div class="cart-view-table">
-                <form action="" method = "POST">
+                <form action="{% url 'cart' slug %}" method = "POST">
+                  {% csrf_token %}
                   <!-- <input type="text" name = "product name" value = "{{order.product_name.product_name}}">
                   <input type="number" name = "quantity" value = "{{order.quantity}}">
                   <input type="number" name = "total" value = "{{order.get_total}}"> -->
@@ -264,7 +265,7 @@
                           <td><a href="#"><img src="img/man/polo-shirt-3.png" alt="img"></a></td>
                           <td><a class="aa-cart-title" href="#">{{order.product_name.product_name}}</a></td>
                           <td>{{order.price}}</td>
-                          <td><input class="aa-cart-quantity" type="number" value="{{order.quantity}}"></td>
+                          <td><input class="aa-cart-quantity" type="number" name = "quantity" value="{{order.quantity}}"></td>
                           
                           <td>Rs. {{order.get_total}}</td>
                         </tr>
@@ -272,7 +273,7 @@
                       </tbody>
                     </table>
                   </div>
-                </form>
+              
                 <!-- Cart Total view -->
                 <div class="cart-view-total">
                   <h4>Cart Total</h4>
@@ -284,8 +285,11 @@
                       </tr>
                     </tbody>
                   </table>
-                  <a href="/home/checkout/" class="aa-cart-view-btn">Proceed to Checkout</a>
+                  <br/>
+                  <button type="submit" class="aa-cart-view-btn">proceed to checkout</button>
+                  <!-- <a href="/home/checkout/" class="aa-cart-view-btn">Proceed to Checkout</a> -->
                 </div>
+               </form> 
               </div>
             
           </div>

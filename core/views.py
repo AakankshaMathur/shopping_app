@@ -184,9 +184,18 @@ def checkout_view(request):
         print(3)
 
         if request.method == "POST":
-            quantity = request.POST.get('quantity')
-            print(quantity)
-            post = Post(quantity = quantity)
+
+            # quantity = request.POST.get('quantity')
+            # print(quantity)
+            # post = Post(quantity = quantity)
+            # post.save()
+
+            form = QuantityForm(request.POST)
+            obj = Order()
+            obj.quantity = form.cleaned_data['quantity']
+            obj.save()
+            print(obj)
+            return redirect("/")
             
     else:
         items = []
@@ -210,6 +219,24 @@ def cart_view(request, slug):
         # orders = Order.objects.all()
         product = Product.objects.get(slug = slug)
         order, created = Order.objects.get_or_create(customer = customer, product_name = product, )
+        
+        if request.method == "POST":
+            print("1aaaaaaaaaadddddddddddd")
+            quantity = request.POST.get('quantity')
+            # print(quantity)
+            # post = Post(quantity = quantity)
+            # post.save()
+
+            # form = QuantityForm(request.POST)
+            # obj = Order()
+            order.quantity = quantity
+            order.save()
+            print(order)
+            print(quantity,"hellooooooo")
+            return redirect("/home/checkout/")
+        else:
+            form = QuantityForm()
+            
 
         # if created:
         #     print("yeah")
@@ -220,13 +247,13 @@ def cart_view(request, slug):
         
         # order.save()
         items = [] 
-        print(3)
+      
     else:
         items = []
         order = {'get_cart_total' : 0,
                 'get_cart_items' : 0}
                 
-    context = {'items' : items, 'order' : order, }
+    context = {'items' : items, 'order' : order, 'quantity' : order.quantity , 'slug' : product.slug,}
     print(context)
 
     return render(request, "cart.html", context)
