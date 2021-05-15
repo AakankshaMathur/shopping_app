@@ -265,7 +265,7 @@
                           <td><a href="#"><img src="img/man/polo-shirt-3.png" alt="img"></a></td>
                           <td><a class="aa-cart-title" href="#">{{order.product_name.product_name}}</a></td>
                           <td>{{order.price}}</td>
-                          <td><input class="aa-cart-quantity" type="number" name = "quantity" value="{{order.quantity}}"></td>
+                          <td><input class="aa-cart-quantity" type="number" min = "1" max = "10" name = "quantity" value="{{order.quantity}}"></td>
                           
                           <td>Rs. {{order.get_total}}</td>
                         </tr>

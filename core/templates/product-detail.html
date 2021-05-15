@@ -158,17 +158,21 @@
                   <div class="aa-product-view-slider">                                
                     <div id="demo-1" class="simpleLens-gallery-container">
                       <div class="simpleLens-container">
-                        <div class="simpleLens-big-image-container"><a data-lens-image="img/women/girl-1.jpg" class="simpleLens-lens-image"><img src="{{product.image.url}}" class="simpleLens-big-image"></a></div>
+                        <div class="simpleLens-big-image-container"><a data-lens-image="img/women/girl-1.jpg" class="simpleLens-lens-image">
+                          <a><img src="{{image.url}}" class="simpleLens-big-image"></a>
+                        </div>
                       </div>
+                      {{product.image}}
+                      
                       <div class="simpleLens-thumbnails-container">
                           <a data-big-image="img/women/girl-1.jpg" data-lens-image="img/women/girl-1.jpg" class="simpleLens-thumbnail-wrapper" href="#">
-                            <img src="{{ image.url }}">
+                            <img src="">
                           </a>                                    
                           <a data-big-image="img/women/girl-1.jpg" data-lens-image="img/women/girl-1.jpg" class="simpleLens-thumbnail-wrapper" href="#">
-                            <img src="{{ image.url }}">
+                            <img src="">
                           </a>
                           <a data-big-image="img/women/girl-1.jpg" data-lens-image="img/women/girl-1.jpg" class="simpleLens-thumbnail-wrapper" href="#">
-                            <img src="{{ image.url }}">
+                            <img src="">
                           </a>
                       </div>
                     </div>

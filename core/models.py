@@ -43,7 +43,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to ='media/', null=True, blank=True)
     slug = models.SlugField(max_length=255, unique=True, null=True,blank=True)
     product_size = models.ManyToManyField('Size')
-    quantity = models.IntegerField(default=1)
+    quantity = models.PositiveIntegerField(default=1, null=True, blank=True)
     desc = models.TextField(max_length=300, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.ForeignKey('Category', related_name='category_type', on_delete=models.CASCADE, null=True, blank=True)
@@ -54,6 +54,10 @@ class Product(models.Model):
         return f"home/detail/{self.slug}/"
     def __str__(self):
         return self.product_name
+
+    def admin_image(self):
+        return '<img src="%s"/>' % self.image
+    admin_image.allow_tags = True
 
 class Category(models.Model):
     # CATEGORY_TYPE = (

@@ -117,7 +117,6 @@ def productdetail_view(request, slug):
     product = Product.objects.get(slug=slug)
     quantity = Product.objects.filter(quantity = product.quantity).count()
     print(quantity)
-   
   
     context = { 'product' : product.product_name,
                 'description' : product.desc,
@@ -165,14 +164,10 @@ def profile_view(request):
     
     return render(request, "profile.html", context)
 
-    
 
-    # obj.address = form.POST.get('address')
-    #         obj.city = form.POST.get('city')
-    #         obj.state = form.POST.get('state')
-    #         obj.country = form.POST.get('country')
-
-def checkout_view(request):    
+def checkout_view(request):  
+    print(request.GET)  
+    print(request.POST)
   
     if request.user.is_authenticated:
         customer = request.user.user_profile
@@ -183,19 +178,28 @@ def checkout_view(request):
         items = [] 
         print(3)
 
-        if request.method == "POST":
+        userprofile = UserProfile.objects.all()
 
-            # quantity = request.POST.get('quantity')
-            # print(quantity)
-            # post = Post(quantity = quantity)
-            # post.save()
 
-            form = QuantityForm(request.POST)
-            obj = Order()
-            obj.quantity = form.cleaned_data['quantity']
-            obj.save()
-            print(obj)
-            return redirect("/")
+        # if request.method == "POST":
+        #     print("POSTTTTTTTTTTTTTTTTT")
+        #     name = request.POST.get("name")
+        #     contact = request.POST.get("contact")
+        #     email = request.POST.get("email")
+        #     address = request.POST.get("address")
+        #     city = request.POST.get("city")
+        #     country = request.POST.get("country")
+
+        #     userprofile.name = name
+        #     userprofile.contact = contact
+        #     userprofile.email = email
+        #     userprofile.address = address
+        #     userprofile.save()
+        #     print(userprofile, "1111111133333333333335555555555555555555555")
+        #     context['message'] = "Billing details updated succesfully"
+        #     return redirect("/home/checkout/")
+
+
             
     else:
         items = []
@@ -223,19 +227,16 @@ def cart_view(request, slug):
         if request.method == "POST":
             print("1aaaaaaaaaadddddddddddd")
             quantity = request.POST.get('quantity')
-            # print(quantity)
-            # post = Post(quantity = quantity)
-            # post.save()
-
-            # form = QuantityForm(request.POST)
-            # obj = Order()
+          
             order.quantity = quantity
             order.save()
             print(order)
             print(quantity,"hellooooooo")
             return redirect("/home/checkout/")
+
         else:
-            form = QuantityForm()
+            # form = QuantityForm()
+            print("no quantity")
             
 
         # if created:

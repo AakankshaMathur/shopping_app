@@ -283,82 +283,92 @@
                           </a>
                         </h4>
                       </div>
-                      <div id="collapseThree" class="panel-collapse collapse">
-                        <div class="panel-body">
-                          
-                            <div class="row">
-                              <div class="col-md-6">
-                                <div class="aa-checkout-single-bill">
-                                  <input type="text" placeholder="Name*">{{user_order.name}}
-                                </div>                             
-                              </div>
-                              
-                            </div> 
-                          
-                            <div class="row">
-                              <div class="col-md-6">
-                                <div class="aa-checkout-single-bill">
-                                  <input type="email" placeholder="Email Address*">{{user_order.email}}
-                                </div>                             
-                              </div>
-                              <div class="col-md-6">
-                                <div class="aa-checkout-single-bill">
-                                  <input type="tel" placeholder="Phone*">{{user_order.contact}}
-                                </div>
-                              </div>
-                            </div> 
-                            <div class="row">
-                              <div class="col-md-12">
-                                <div class="aa-checkout-single-bill">
-                                  <textarea cols="8" rows="3">Address*</textarea>{{user_order.bill_address}}
-                                </div>                             
-                              </div>                            
-                            </div>   
-                            <div class="row">
-                              <div class="col-md-12">
-                                <div class="aa-checkout-single-bill">
-                                  <select>
-                                    <option value="0">Select Your Country</option>
-                                    <option value="1">Australia</option>
-                                    <option value="2">Afganistan</option>
-                                    <option value="3">Bangladesh</option>
-                                    <option value="4">Belgium</option>
-                                    <option value="5">Brazil</option>
-                                    <option value="6">Canada</option>
-                                    <option value="7">China</option>
-                                    <option value="8">Denmark</option>
-                                    <option value="9">Egypt</option>
-                                    <option value="10">India</option>
-                                    <option value="11">Iran</option>
-                                    <option value="12">Israel</option>
-                                    <option value="13">Mexico</option>
-                                    <option value="14">UAE</option>
-                                    <option value="15">UK</option>
-                                    <option value="16">USA</option>
-                                  </select>
-                                </div>                             
-                              </div>                            
-                            </div>
-                            <div class="row">
+                      <form action = "/home/checkout/" method = "POST">
+                        <div id="collapseThree" class="panel-collapse collapse">
+                          <div class="panel-body">
                             
-                              <div class="col-md-6">
-                                <div class="aa-checkout-single-bill">
-                                  <input type="text" placeholder="City / Town*">
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="aa-checkout-single-bill">
+                                    <input type="text"  name = "name" placeholder="Name*" value = {{userprofile.name}}>
+                                  </div>                             
                                 </div>
-                              </div>
-                            </div>
-                            <div class="row">
+                                
+                              </div>  -->
+                            
+                              <!-- <div class="row">
+                                <div class="col-md-6">
+                                  <div class="aa-checkout-single-bill">
+                                    <input type="email" placeholder="Email Address*" name = "email" value = {{userprofile.email}}>
+                                  </div>                             
+                                </div>
+
+                                <div class="col-md-6">
+                                  <div class="aa-checkout-single-bill">
+                                    <input type="tel" name = "contact" placeholder="Phone*" value = {{userprofile.contact}}>
+                                  </div>
+                                </div>
+                              </div>  -->
+                              <!-- <div class="row">
+                                <div class="col-md-12">
+                                  <div class="aa-checkout-single-bill">
+                                    <textarea cols="8" rows="3">Address*</textarea>
+                                  </div>                             
+                                </div>                            
+                              </div>    -->
+                              <!-- <div class="row">
+                                <div class="col-md-12">
+                                  <div class="aa-checkout-single-bill">
+                                    <select>
+                                      <option value="0">Select Your Country</option>
+                                      <option value="1">Australia</option>
+                                      <option value="2">Afganistan</option>
+                                      <option value="3">Bangladesh</option>
+                                      <option value="4">Belgium</option>
+                                      <option value="5">Brazil</option>
+                                      <option value="6">Canada</option>
+                                      <option value="7">China</option>
+                                      <option value="8">Denmark</option>
+                                      <option value="9">Egypt</option>
+                                      <option value="10">India</option>
+                                      <option value="11">Iran</option>
+                                      <option value="12">Israel</option>
+                                      <option value="13">Mexico</option>
+                                      <option value="14">UAE</option>
+                                      <option value="15">UK</option>
+                                      <option value="16">USA</option>
+                                    </select>
+                                  </div>                             
+                                </div>                            
+                              </div> -->
+                              <!-- <div class="row">
+                              
+                                <div class="col-md-6">
+                                  <div class="aa-checkout-single-bill">
+                                    <input type="text" placeholder="City / Town*">
+                                  </div>
+                                </div>
+                              </div> -->
+                              
+                            <!-- <div class="row">
                                
-                              <div class="col-md-6">
-                                <div class="aa-checkout-single-bill">
-                                  <input type="submit" placeholder="City / Town*">
+                                
+                                <div class="col-md-6">
+                                  <div class="aa-checkout-single-bill">  -->
+                                
+                                    <!-- <input type="submit" placeholder="City / Town*"> -->
+                                    <!-- <button type = "submit">Submit</button>
+                                
+                                  </div>
                                 </div>
+                               
+
                               </div>
-                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                   -->
+                      </form>  -->
+                    <!-- </div> -->
+                  
                    
                   </div>
                 </div>
