@@ -12,6 +12,7 @@ urlpatterns = [
     path('home/detail/<slug:slug>/', productdetail_view, name="productdetail"),
     path('home/checkout/', checkout_view, name="checkout"),
     path('home/cart/<slug:slug>/', cart_view, name="cart"),
+    path('home/', search_product, name = "search"),
     # path('home/product/category', category_view, name="category_view"),
     
 ]

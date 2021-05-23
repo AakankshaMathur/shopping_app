@@ -258,3 +258,21 @@ def cart_view(request, slug):
     print(context)
 
     return render(request, "cart.html", context)
+
+def search_product(request):
+ 
+
+    model = Product
+    slug = None
+    # products = Product.objects.all()
+    menproduct = Product.objects.filter(category__category_name = "Men")
+    womenproduct = Product.objects.filter(category__category_name = "Women")
+
+ 
+    context = {'menproduct' : menproduct, 
+                'womenproduct' : womenproduct,
+           
+                }
+    print(context)
+    
+    return render(request, "index.html")

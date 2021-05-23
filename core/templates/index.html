@@ -60,10 +60,16 @@
               <!-- / cart box -->
               <!-- search box -->
               <div class="aa-search-box">
-                <form action="">
-                  <input type="text" name="" id="" placeholder="Search here ex. 'man' ">
-                  <button type="submit"><span class="fa fa-search"></span></button>
+                <form action="{% url 'search' %}" method="POST">
+                  {% csrf_token %}
+                  <input type="text" name="product_name" id="" placeholder="Search here ex. 'man' ">
+                  <button type="submit" name="Search" value="search"><span class="fa fa-search"></span></button>
                 </form>
+
+                {% for i in result %}
+                  {{i.product_name}}
+                {% endfor %}
+
               </div>
               <!-- / search box -->             
             </div>
