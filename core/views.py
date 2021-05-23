@@ -255,5 +255,6 @@ def cart_view(request, slug):
                 
     context = {'items' : items, 'order' : order, 'quantity' : order.quantity , 'slug' : product.slug,}
     print(context)
+   
 
     return render(request, "cart.html", context)
